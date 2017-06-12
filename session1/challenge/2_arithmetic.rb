@@ -9,4 +9,14 @@
 # arithmetic2(-6, -7)  # => -3.5
 
 def arithmetic2(a, b)
+  #puts "#{a}, #{b}"  #to check the test cases used by rake
+  a < b ? a.to_f/2 : b.to_f/2
 end
+
+=begin
+puts arithmetic2(1,2)
+puts arithmetic2(20,19)
+puts arithmetic2(-6,-7)
+puts arithmetic2(-20,-19)
+puts arithmetic2(0,0)
+=end
