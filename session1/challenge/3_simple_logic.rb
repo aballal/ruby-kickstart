@@ -8,5 +8,14 @@
 # ten_twenty(6) # => 10
 
 def ten_twenty(n)
-  # your code goes here
+  #puts n  #to check the test cases used by rake
+  n.even? ? 10 : 20
 end
+
+=begin
+puts ten_twenty(5)
+puts ten_twenty(6)
+puts ten_twenty(-5)
+puts ten_twenty(-6)
+puts ten_twenty(0)
+=end
