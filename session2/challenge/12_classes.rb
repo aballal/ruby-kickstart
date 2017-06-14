@@ -21,8 +21,41 @@
 # f.to_f               # => 0.5
 
 class Fraction
+  attr_accessor 'numerator'
+  attr_accessor 'denominator'
+
+  def initialize(numerator, denominator)
+    @numerator = numerator
+    @denominator = denominator
+  end
+
+  def to_f
+    @numerator * 1.0 / @denominator
+  end
+
+  def lowest
+    gcd = gcd(@numerator, @denominator)
+    Fraction.new(@numerator / gcd, @denominator / gcd)
+  end
+
+  def to_s
+    @numerator.to_s + "/" + @denominator.to_s
+  end
+
   def gcd(a,b)
     return a if b == 0
     gcd(b, a%b)
   end
 end
+
+=begin
+f = Fraction.new 20, 60
+p f.numerator          # => 20
+p f.denominator        # => 60
+p f.to_s               # => "20/60"
+p f.lowest.to_s        # => "1/3"
+f.numerator = 50
+f.denominator = 100
+p f.to_s               # => "50/100"
+p f.to_f               # => 0.5
+=end
