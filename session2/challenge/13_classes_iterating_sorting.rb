@@ -34,6 +34,7 @@
 # Blog.new Date.parse("2010-01-02"), lissa, "Got a new job, cuz I'm pretty much the best ^_^"   # we'll call this blog4
 # lissa.blogs                     # => [ blog1 , blog4 , blog2 , blog3 ]
 #
+#aballal: calling Blog.new won't add the blogs to lissa.blogs. Call lissa.add_blog instead.
 # blog5 = Blog.new Date.today, lissa, <<BLOG_ENTRY
 # Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce orci nunc, porta non tristique eu, auctor tincidunt mauris.
 # Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Etiam vitae nibh sapien. Curabitur
@@ -47,6 +48,7 @@
 #                          Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Etiam vitae nibh sapien. Curabitur
 #                          eget eros bibendum justo congue auctor non at turpis. Aenean feugiat vestibulum mi ac pulvinar. Fusce ut felis justo, in
 #                          porta lectus.
+#aballal: No mention of entry method for Blog class in the description at the top
 #
 # blog5.date = Date.parse('2009-01-02')
 # blog5.user = User.new 'disloyalist.party'
@@ -58,9 +60,49 @@
 #                       From the school of revision, Comes the standard inventor's rule, Books of subtle notation Compositions, all original
 #                       I am a pioneer, synthetic engineer, On the brink of discovery, On the eve of historic light, Worked in secret for decades,
 #                       All my labor will be lost with time
-
+#aballal: blogs is an attribute in User not method
+#aballal: add_blog should return the blog just added or a rake test will fail
 
 
 # date docs are at: http://ruby-doc.org/core/classes/Date.html
 # don't spend too much time worrying about them :)
 require 'date'
+class User
+  attr_accessor :username, :blogs
+
+  def initialize(username)
+    @username = username
+    @blogs = []
+  end
+
+  def add_blog(date, text)
+    new_blog = Blog.new(date, self, text)
+    @blogs << new_blog
+    @blogs = @blogs.sort_by {|blog| blog.date}.reverse
+    new_blog
+  end
+end
+
+class Blog
+  attr_accessor 'date'
+  attr_accessor 'user'
+  attr_accessor 'text'
+
+  def initialize(date, user, text)
+    @date = date
+    @user = user
+    @text = text
+  end
+
+  def summary
+    text.split(" ")[0..9].join(" ")
+  end
+
+  def entry
+    "#{user.username} #{date}\n#{text}"
+  end
+
+  def ==(other)
+    return self.date == other.date && self.user == other.user && self.text == other.text
+  end
+end
