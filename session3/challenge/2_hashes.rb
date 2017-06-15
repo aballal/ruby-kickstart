@@ -8,3 +8,11 @@
 # staircase 4  # => {1 => [], 3 => [2]}
 # staircase 5  # => {1 => [], 3 => [2], 5 =>[2, 4]}
 
+def staircase(n)
+  odd_even = Hash.new
+  1.upto(n) { |i| odd_even[i] = [] if i.odd? }
+  1.upto(n) { |i| odd_even.select {|key,value| key > i}.each {|key,value| value << i} if i.even? }
+  odd_even
+end
+
+# p staircase(20)
