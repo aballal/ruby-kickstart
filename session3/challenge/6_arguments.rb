@@ -17,3 +17,28 @@
 # match_maker true,  true,  true, true, nil     # => [false, true]
 # match_maker true,  true,  true, 0, nil        # => [false, true]
 
+def match_maker (match_opposite, *list)
+  #Matching opposites, possibly because they attract!
+  matches =[]
+  list.each_slice 2 do |first, second|
+    # Overwriting truthy and falsey to true and false respectively
+    first = first ? true : false
+    second = second ? true : false
+    # If match_opposite = true opposites are set to true, if match_opposite = false opposites are set to false
+    # This implies return value is same as match_opposite for an opposite pair
+    first == !second ? matches << match_opposite : matches << !match_opposite
+  end
+  matches
+end
+
+=begin
+p match_maker false, true,  true                # => [true]
+p match_maker true,  true,  true                # => [false]
+p match_maker true,  false, false               # => [false]
+p match_maker true,  false, true                # => [true]
+p match_maker true,  true,  false               # => [true]
+p match_maker true,  true,  true, false, true   # => [false, true]
+p match_maker true,  true,  true, false, nil    # => [false, false]
+p match_maker true,  true,  true, true, nil     # => [false, true]
+p match_maker true,  true,  true, 0, nil        # => [false, true]
+=end
