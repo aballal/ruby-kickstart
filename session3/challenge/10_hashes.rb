@@ -29,5 +29,18 @@
 # create it from scratch :)
 
 
-def pathify
+def pathify (path=Hash.new, cwd = "", all_paths=[])
+  path.each do |key,value|
+    pathify(value, cwd + "/" + key,all_paths) if value.is_a? Hash
+    value.map { |e| all_paths << cwd + "/" + key + "/" + e }.to_a if value.is_a? Array
+  end
+  all_paths
 end
+
+=begin
+p pathify 'usr' => {'bin' => ['ruby'] }                                                        # => ['/usr/bin/ruby']
+p pathify 'usr' => {'bin' => ['ruby', 'perl'] }                                                # => ['/usr/bin/ruby', '/usr/bin/perl']
+p pathify 'usr' => {'bin' => ['ruby'], 'include' => ['zlib.h'] }                               # => ['/usr/bin/ruby', '/usr/include/zlib.h']
+p pathify 'usr' => {'bin' => ['ruby']}, 'opt' => {'local' => {'bin' => ['sqlite3', 'rsync']} } # => ['/usr/bin/ruby', 'opt/local/bin/sqlite3', 'opt/local/bin/rsync']
+p pathify
+=end
