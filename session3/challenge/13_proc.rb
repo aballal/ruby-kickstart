@@ -52,5 +52,19 @@
 #   end
 # end       # => ["a", "m", "r", 1, 3, 4, 9, 2.5, 9.0, 25.8]
 
-def your_sort
+def your_sort(list,&block)
+  block ||= Proc.new {|a,b| a <=> b}
+  for i in 0...list.length
+    for j in (i+1)...list.length
+      order = block.call(list[i],list[j])
+      if order == 1
+        temp = list [i]
+        list[i] = list[j]
+        list[j] = temp
+      end
+    end
+  end
+  list
 end
+
+# p your_sort [24, 0, 68, 44, 68, 47, 42, 66, 89, 22]
