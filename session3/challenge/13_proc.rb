@@ -54,16 +54,7 @@
 
 def your_sort(list,&block)
   block ||= Proc.new {|a,b| a <=> b}
-  for i in 0...list.length
-    for j in (i+1)...list.length
-      order = block.call(list[i],list[j])
-      if order == 1
-        temp = list [i]
-        list[i] = list[j]
-        list[j] = temp
-      end
-    end
-  end
+  0.upto(list.length-1) {|i| (i+1).upto(list.length-1) {|j| (list[i],list[j] = list[j],list[i]) if block.call(list[i],list[j]) == 1 } }
   list
 end
 
