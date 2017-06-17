@@ -7,3 +7,13 @@
 #
 # print_list_in_reverse head   # >> "1\n2\n"
 
+def print_list_in_reverse (head)
+  print_list_in_reverse (head[:next]) if head[:next]
+  print "#{head[:data]}\n"
+end
+
+=begin
+head = {:data => 1, :next => nil}
+head = {:data => 2, :next => head}
+print_list_in_reverse head   # >> "1\n2\n"
+=end
