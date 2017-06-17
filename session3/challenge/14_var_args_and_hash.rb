@@ -21,11 +21,30 @@
 # problem_14 2,   5, 6, 45, 99, 13, 5, 6,  :problem => :same_ends    # => true
 # problem_14 3,   5, 6, 45, 99, 13, 5, 6,  :problem => :same_ends    # => false
 
-def problem_14
+def problem_14 (*list)
+  hash = (list.last.is_a? Hash) ? list.delete_at(-1) : {:problem => :count_clumps}
+  hash[:problem] == :count_clumps ? count_clumps(*list) : same_ends(list[0],*list[1..-1])
 end
 
-def same_ends
+def same_ends(n, *list)
+  list[0..n-1] == list[-n..-1]
 end
 
-def count_clumps
+def count_clumps(*list)
+  count = 0
+  prev = nil
+  list.each_cons 2 {|a,b| count += 1 if b == a && a!= prev; prev = a}
+  count
 end
+
+=begin
+p problem_14 1, 2, 2, 3, 4, 4                               # => 2
+p problem_14 1, 1, 2, 1, 1,    :problem => :count_clumps    # => 2
+p problem_14 1, 1, 1, 1, 1,    :problem => :count_clumps    # => 1
+p count_clumps 1, 2, 2, 3, 4, 4
+
+p problem_14 1,   5, 6, 45, 99, 13, 5, 6,  :problem => :same_ends    # => false
+p problem_14 2,   5, 6, 45, 99, 13, 5, 6,  :problem => :same_ends    # => true
+p problem_14 3,   5, 6, 45, 99, 13, 5, 6,  :problem => :same_ends    # => false
+p same_ends  1,   5, 6, 45, 99, 13, 5, 6
+=end
