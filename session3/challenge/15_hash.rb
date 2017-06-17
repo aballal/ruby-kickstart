@@ -38,3 +38,32 @@
 # middle head                        # => 3
 # head = {:data => 6, :next => head}
 # middle head                        # => 3
+
+def middle (head)
+  #Never lose your head!
+  current = head
+  count   = 0
+  while current!= nil
+    current = current[:next]
+    count += 1
+  end
+  mid = count / 2
+  current = head
+  mid.times {current = current[:next]}
+  current[:data]
+end
+
+=begin
+head = {:data => 1, :next => nil}
+p middle head
+head = {:data => 2, :next => head}
+p middle head
+head = {:data => 3, :next => head}
+p middle head
+head = {:data => 4, :next => head}
+p middle head
+head = {:data => 5, :next => head}
+p middle head
+head = {:data => 6, :next => head}
+p middle head
+=end
